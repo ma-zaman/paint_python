@@ -24,106 +24,98 @@ reposx1 = ['none']
 reposy1 = ['none']
 
 
-########################################################################################################################################################################################
-### THICKNESS ##########################################################################################################################################################################
-########################################################################################################################################################################################
-																								#####
-def minus():																					#####
-	global wid,Label1,butplus,butminus															#####
-	if wid > 0:																					#####
-		wid -= 1																				#####
-		if wid == 0:																			#####
-			wid = 1																				#####
-																								#####
-	else:																						#####
-		print 'min'																				#####
-		wid = 1																					#####
-																								#####
-	butplus.destroy()																			#####
-	Label1.destroy()																			#####
-	butminus.destroy()																			#####
-	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)						#####
-	butplus.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)											#####
-	Label1.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)						#####
-	butminus.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-def plus():																						#####
-	global wid,Label1,butplus,butminus															#####
-	if wid < 100:																				#####
-		wid += 1																				#####
-																								#####
-	else:																						#####
-		print 'max'																				#####
-																								#####
-	butplus.destroy()																			#####
-	Label1.destroy()																			#####
-	butminus.destroy()																			#####
-	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)						#####
-	butplus.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)											#####
-	Label1.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)						#####
-	butminus.pack(in_=bottom,side = RIGHT)														#####
-																								#####
-########################################################################################################################################################################################
-### THICKNESS ##########################################################################################################################################################################
-########################################################################################################################################################################################
+### THICKNESS ###
+
+def minus():
+	global wid,Label1,butplus,butminus
+	if wid > 0:
+		wid -= 1
+		if wid == 0:
+			wid = 1
+
+	else:
+		print 'min'
+		wid = 1
+
+	butplus.destroy()
+	Label1.destroy()
+	butminus.destroy()
+	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)
+	butplus.pack(in_=bottom,side = RIGHT)
+
+	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)
+	Label1.pack(in_=bottom,side = RIGHT)
+
+	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
+	butminus.pack(in_=bottom,side = RIGHT)
+
+def plus():
+	global wid,Label1,butplus,butminus
+	if wid < 100:
+		wid += 1
+
+	else:
+		print 'max'
+
+	butplus.destroy()
+	Label1.destroy()
+	butminus.destroy()
+	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)
+	butplus.pack(in_=bottom,side = RIGHT)
+
+	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)
+	Label1.pack(in_=bottom,side = RIGHT)
+
+	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
+	butminus.pack(in_=bottom,side = RIGHT)
+
+### THICKNESS ###
 
 
 
-########################################################################################################################################################################################
-### COLORS ##############################################################################################################################################################################
-########################################################################################################################################################################################
-										#####
-def red():								#####
-	global coul							#####
-	coul = 'red'						#####
-										#####
-def blue():								#####
-	global coul							#####
-	coul = 'blue'						#####
-										#####
-def black():							#####
-	global coul							#####
-	coul = 'black'						#####
-										#####
-def yellow():							#####
-	global coul							#####
-	coul = 'yellow'						#####
-										#####
-def green():							#####
-	global coul							#####
-	coul = 'green'						#####
-										#####
-def white():							#####
-	global coul							#####
-	coul = 'white'						#####
-										#####
-def brown():							#####
-	global coul							#####
-	coul = 'brown'						#####
-										#####
-def dimgray():							#####
-	global coul							#####
-	coul = 'dim gray'					#####
-										#####
-def orangered():						#####
-	global coul							#####
-	coul = 'orange red'					#####
-										#####
-def salmon():							#####
-	global coul							#####
-	coul = 'salmon'						#####
-										#####
-########################################################################################################################################################################################
-### COLORS ##############################################################################################################################################################################
-########################################################################################################################################################################################
+### COLORS #######
+
+def red():
+	global coul
+	coul = 'red'
+
+def blue():
+	global coul
+	coul = 'blue'
+
+def black():
+	global coul
+	coul = 'black'
+
+def yellow():
+	global coul
+	coul = 'yellow'
+
+def green():
+	global coul
+	coul = 'green'
+
+def white():
+	global coul
+	coul = 'white'
+
+def brown():
+	global coul
+	coul = 'brown'
+
+def dimgray():
+	global coul
+	coul = 'dim gray'
+
+def orangered():
+	global coul
+	coul = 'orange red'
+
+def salmon():
+	global coul
+	coul = 'salmon'
+
+### COLORS #######
 
 
 
@@ -157,63 +149,59 @@ def Close():
 
 
 
-########################################################################################################################################################################################
-### TOOLS ##############################################################################################################################################################################
-########################################################################################################################################################################################
-										#####
-def pencil():							#####
-	global test							#####
-	test = 'pencil'						#####
-	Mafenetre.config(cursor='pencil')		#####
-										#####
-def rubber():							#####
-	global test							#####
-	test = 'rubber'						#####
-	Mafenetre.config(cursor='dotbox')		#####
-										#####
-def line():								#####
-	global test							#####
-	test = 'line'						#####
-	Mafenetre.config(cursor='tcross')		#####
-										#####
-def fill_rectangle():					#####
-	global test							#####
-	test = 'fill_rectangle'				#####
-	Mafenetre.config(cursor='tcross')		#####
-										#####
-def fill_oval():						#####
-	global test							#####
-	test = 'fill_oval'					#####
-	Mafenetre.config(cursor='circle')		#####
-										#####
-def fill_circle():						#####
-	global test							#####
-	test = 'fill_circle'				#####
-	Mafenetre.config(cursor='circle')		#####
-										#####
-def rectangle():						#####
-	global test							#####
-	test = 'rectangle'					#####
-	Mafenetre.config(cursor='tcross')		#####
-										#####
-def oval():								#####
-	global test							#####
-	test = 'oval'						#####
-	Mafenetre.config(cursor='circle')		#####
-										#####
-def circle():							#####
-	global test							#####
-	test = 'circle'						#####
-	Mafenetre.config(cursor='circle')		#####
-										#####
-def arrow():							#####
-	global test							#####
-	test = 'arrow'						#####
-	Mafenetre.config(cursor='arrow')			#####
-										#####
-########################################################################################################################################################################################
-### TOOLS ##############################################################################################################################################################################
-########################################################################################################################################################################################
+### TOOLS #######
+
+def pencil():
+	global test
+	test = 'pencil'
+	Mafenetre.config(cursor='pencil')
+
+def rubber():
+	global test
+	test = 'rubber'
+	Mafenetre.config(cursor='dotbox')
+
+def line():
+	global test
+	test = 'line'
+	Mafenetre.config(cursor='tcross')
+
+def fill_rectangle():
+	global test
+	test = 'fill_rectangle'
+	Mafenetre.config(cursor='tcross')
+
+def fill_oval():
+	global test
+	test = 'fill_oval'
+	Mafenetre.config(cursor='circle')
+
+def fill_circle():
+	global test
+	test = 'fill_circle'
+	Mafenetre.config(cursor='circle')
+
+def rectangle():
+	global test
+	test = 'rectangle'
+	Mafenetre.config(cursor='tcross')
+
+def oval():
+	global test
+	test = 'oval'
+	Mafenetre.config(cursor='circle')
+
+def circle():
+	global test
+	test = 'circle'
+	Mafenetre.config(cursor='circle')
+
+def arrow():
+	global test
+	test = 'arrow'
+	Mafenetre.config(cursor='arrow')
+
+### TOOLS #######
 
 
 
@@ -847,42 +835,34 @@ Canevas.focus_set()
 
 
 
-########################################################################################################################################################################################
-### BUTTON SETTTINGS ###################################################################################################################################################################
-########################################################################################################################################################################################
-										#####
-top = Frame(Mafenetre)					#####
-top.pack(side=TOP)						#####
-										#####
-bottom = Frame(Mafenetre)				#####
-bottom.pack(side=BOTTOM)				#####
-										#####
-########################################################################################################################################################################################
-### BUTTON SETTTINGS ###################################################################################################################################################################
-########################################################################################################################################################################################
+### BUTTON SETTTINGS
+
+top = Frame(Mafenetre)
+top.pack(side=TOP)
+
+bottom = Frame(Mafenetre)
+bottom.pack(side=BOTTOM)
+
+### BUTTON SETTTINGS
 
 
 
-########################################################################################################################################################################################
-### TOOLS BUTTON #######################################################################################################################################################################
-########################################################################################################################################################################################
-																							#####
-Button(Mafenetre, text ='Pencil',relief=RAISED,cursor="pencil",command = pencil).pack(in_=top,side = LEFT)					#####
-Button(Mafenetre, text ='Rubber',relief=RAISED,cursor="dotbox", command = rubber).pack(in_=top,side = LEFT)					#####
-Button(Mafenetre, text ='Line',relief=RAISED,cursor="tcross", command = line).pack(in_=top,side = LEFT)						#####
-Button(Mafenetre, text ='Fill Rectangle',relief=RAISED,cursor="tcross", command = fill_rectangle).pack(in_=top,side = LEFT)	#####
-Button(Mafenetre, text ='Fill Oval',relief=RAISED,cursor="circle", command = fill_oval).pack(in_=top,side = LEFT)				#####
-Button(Mafenetre, text ='Fill Circle',relief=RAISED,cursor="circle", command = fill_circle).pack(in_=top,side = LEFT)			#####
-Button(Mafenetre, text ='Rectangle',relief=RAISED,cursor="tcross", command = rectangle).pack(in_=top,side = LEFT)				#####
-Button(Mafenetre, text ='Oval',relief=RAISED,cursor="circle", command = oval).pack(in_=top,side = LEFT)						#####
-Button(Mafenetre, text ='Circle',relief=RAISED,cursor="circle", command = circle).pack(in_=top,side = LEFT)					#####
-Button(Mafenetre, text ='Arrow',relief=RAISED,cursor="arrow", command = arrow).pack(in_=top,side = LEFT)						#####
-Button(Mafenetre, text ='test', command = dele).pack(in_=top,side = LEFT)						#####
-Button(Mafenetre, text ='test1', command = prin).pack(in_=top,side = LEFT)						#####
-																							#####
-########################################################################################################################################################################################
-### TOOLS BUTTON #######################################################################################################################################################################
-########################################################################################################################################################################################
+### TOOLS BUTTON
+
+Button(Mafenetre, text ='Pencil',relief=RAISED,cursor="pencil",command = pencil).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Rubber',relief=RAISED,cursor="dotbox", command = rubber).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Line',relief=RAISED,cursor="tcross", command = line).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Fill Rectangle',relief=RAISED,cursor="tcross", command = fill_rectangle).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Fill Oval',relief=RAISED,cursor="circle", command = fill_oval).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Fill Circle',relief=RAISED,cursor="circle", command = fill_circle).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Rectangle',relief=RAISED,cursor="tcross", command = rectangle).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Oval',relief=RAISED,cursor="circle", command = oval).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Circle',relief=RAISED,cursor="circle", command = circle).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='Arrow',relief=RAISED,cursor="arrow", command = arrow).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='test', command = dele).pack(in_=top,side = LEFT)
+Button(Mafenetre, text ='test1', command = prin).pack(in_=top,side = LEFT)
+
+### TOOLS BUTTON
 
 
 
@@ -897,48 +877,38 @@ butminus.pack(in_=bottom,side = RIGHT)
 
 
 
-########################################################################################################################################################################################
-### COLORS BUTTON ######################################################################################################################################################################
-########################################################################################################################################################################################
-																																	#####
-Button(Mafenetre, text =' ', bg='red', fg='red', overrelief='solid', command = red).pack(in_=bottom,side = LEFT)							#####
-Button(Mafenetre, text =' ', bg='yellow', fg='yellow', overrelief='solid', command = yellow).pack(in_=bottom,side = LEFT)				#####
-Button(Mafenetre, text =' ', bg='blue', fg='blue', overrelief='solid', command = blue).pack(in_=bottom,side = LEFT)						#####
-Button(Mafenetre, text =' ', bg='black', fg='black', overrelief='solid', command = black).pack(in_=bottom,side = LEFT)					#####
-Button(Mafenetre, text =' ', bg='green', fg='green', overrelief='solid', command = green).pack(in_=bottom,side = LEFT)					#####
-Button(Mafenetre, text =' ', bg='brown', fg='brown', overrelief='solid', command = brown).pack(in_=bottom,side = LEFT)					#####
-Button(Mafenetre, text =' ', bg='dim gray', fg='dim gray', overrelief='solid', command = dimgray).pack(in_=bottom,side = LEFT)			#####
-Button(Mafenetre, text =' ', bg='Orange Red', fg='Orange Red', overrelief='solid', command = orangered).pack(in_=bottom,side = LEFT)		#####
-Button(Mafenetre, text =' ', bg='Salmon', fg='Salmon', overrelief='solid', command = salmon).pack(in_=bottom,side = LEFT)				#####
-Button(Mafenetre, text =' ', bg='white', fg='white', overrelief='solid', command = white).pack(in_=bottom,side = LEFT)					#####
-																																	#####
-########################################################################################################################################################################################
-### COLORS BUTTON ######################################################################################################################################################################
-########################################################################################################################################################################################
+### COLORS BUTTON
+Button(Mafenetre, text =' ', bg='red', fg='red', overrelief='solid', command = red).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='yellow', fg='yellow', overrelief='solid', command = yellow).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='blue', fg='blue', overrelief='solid', command = blue).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='black', fg='black', overrelief='solid', command = black).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='green', fg='green', overrelief='solid', command = green).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='brown', fg='brown', overrelief='solid', command = brown).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='dim gray', fg='dim gray', overrelief='solid', command = dimgray).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='Orange Red', fg='Orange Red', overrelief='solid', command = orangered).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='Salmon', fg='Salmon', overrelief='solid', command = salmon).pack(in_=bottom,side = LEFT)
+Button(Mafenetre, text =' ', bg='white', fg='white', overrelief='solid', command = white).pack(in_=bottom,side = LEFT)
+
+### COLORS BUTTON
 
 
+### MENU ########
 
-########################################################################################################################################################################################
-### MENU ###############################################################################################################################################################################
-########################################################################################################################################################################################
-																	#####
-menubar = Menu(Mafenetre)												#####
-																	#####
-menufile = Menu(menubar,tearoff=0)									#####
-menufile.add_command(label="Open an image",command=Open)			#####
-menufile.add_command(label="New page",command=Close)				#####
-#menufile.add_command(label="Save",command=save)					#####
-menufile.add_command(label="Quit",command=Mafenetre.destroy)				#####
-menubar.add_cascade(label="File", menu=menufile)					#####
-																	#####
-menubar.add_command(label="Undo",command=undo)						#####
-menubar.add_command(label="Redo",command=redo)						#####
-																	#####
-Mafenetre.config(menu=menubar)											#####
-																	#####
-########################################################################################################################################################################################
-### MENU ###############################################################################################################################################################################
-########################################################################################################################################################################################
+menubar = Menu(Mafenetre)
+
+menufile = Menu(menubar,tearoff=0)
+menufile.add_command(label="Open an image",command=Open)
+menufile.add_command(label="New page",command=Close)
+#menufile.add_command(label="Save",command=save)
+menufile.add_command(label="Quit",command=Mafenetre.destroy)
+menubar.add_cascade(label="File", menu=menufile)
+
+menubar.add_command(label="Undo",command=undo)
+menubar.add_command(label="Redo",command=redo)
+
+Mafenetre.config(menu=menubar)
+
+### MENU ########
 
 Canevas.bind('<Button->',Clic)
 Canevas.bind('<B1-Motion>',Drag)

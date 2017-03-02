@@ -1,5 +1,4 @@
 from Tkinter import *
-import pygame
 import tkFileDialog
 import tkMessageBox
 

@@ -70,54 +70,6 @@ def plus():
 
 ### THICKNESS ###
 
-
-
-### COLORS #######
-
-def red():
-	global coul
-	coul = 'red'
-
-def blue():
-	global coul
-	coul = 'blue'
-
-def black():
-	global coul
-	coul = 'black'
-
-def yellow():
-	global coul
-	coul = 'yellow'
-
-def green():
-	global coul
-	coul = 'green'
-
-def white():
-	global coul
-	coul = 'white'
-
-def brown():
-	global coul
-	coul = 'brown'
-
-def dimgray():
-	global coul
-	coul = 'dim gray'
-
-def orangered():
-	global coul
-	coul = 'orange red'
-
-def salmon():
-	global coul
-	coul = 'salmon'
-
-### COLORS #######
-
-
-
 def Open():
 	filename = tkFileDialog.askopenfilename()
 
@@ -808,6 +760,57 @@ def prin():
 	#print 'unposx1 =',unposx1
 	#print 'unposy1 =',unposy1
 
+def color_palette(N,num):
+	delta = 255. / (N/3)
+	num=num*100
+	if num < N/3:
+		R = 0
+		G = delta * num
+		B = 255 - delta * num
+		print '1',num
+	elif N/3 <= num < 2*N/3:
+		R = delta * (num - N/3)
+		G = 255
+		B = 0
+		print '2'
+	elif 2*N/3 <= num <= N:
+		R = 255
+		G = 255 - delta * (num - 2*N/3)
+		B = 0
+		print '3'
+	return '#' + hex(int(R))[2:].zfill(2) + hex(int(G))[2:].zfill(2)+ hex(int(B))[2:].zfill(2)
+
+def color_chooser(event):
+	global coul
+	n= 100
+	coulx = event.x
+	coulx = (coulx/5)+1
+	if coulx > 99:
+		coulx = 99
+	coul = color_palette(n,1.0/float(n)*float(coulx))
+
+
+def color():
+	Mafenetre1 = Tk()
+	Mafenetre1.title('Pion')
+	Mafenetre1.config(cursor='tcross')
+	Canevas1 = Canvas(Mafenetre1, width = 500, height =50,bg = 'white')
+	Canevas1.bind('<Button-1>',color_chooser)
+	Canevas1.focus_set()
+	Canevas1.pack()
+	k=0
+	n= 100
+	azex=0
+	azex1=5
+	azey=0
+	azey1=50
+	for k in range(n):
+		c= color_palette(n,1.0/float(n)*float(k))
+		Canevas1.create_rectangle(azex,azey,azex1,azey1,outline=c,fill=c)
+		azex+=5
+		azex1+=5
+		Canevas1.focus_set()
+
 
 
 Width = 500 #int(raw_input('Width :'))
@@ -875,22 +878,6 @@ butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
 butminus.pack(in_=bottom,side = RIGHT)
 
 
-
-### COLORS BUTTON
-Button(Mafenetre, text =' ', bg='red', fg='red', overrelief='solid', command = red).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='yellow', fg='yellow', overrelief='solid', command = yellow).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='blue', fg='blue', overrelief='solid', command = blue).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='black', fg='black', overrelief='solid', command = black).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='green', fg='green', overrelief='solid', command = green).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='brown', fg='brown', overrelief='solid', command = brown).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='dim gray', fg='dim gray', overrelief='solid', command = dimgray).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='Orange Red', fg='Orange Red', overrelief='solid', command = orangered).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='Salmon', fg='Salmon', overrelief='solid', command = salmon).pack(in_=bottom,side = LEFT)
-Button(Mafenetre, text =' ', bg='white', fg='white', overrelief='solid', command = white).pack(in_=bottom,side = LEFT)
-
-### COLORS BUTTON
-
-
 ### MENU ########
 
 menubar = Menu(Mafenetre)
@@ -899,6 +886,7 @@ menufile = Menu(menubar,tearoff=0)
 menufile.add_command(label="Open an image",command=Open)
 menufile.add_command(label="New page",command=Close)
 #menufile.add_command(label="Save",command=save)
+menufile.add_command(label="Color palette",command=color)
 menufile.add_command(label="Quit",command=Mafenetre.destroy)
 menubar.add_cascade(label="File", menu=menufile)
 
@@ -909,7 +897,7 @@ Mafenetre.config(menu=menubar)
 
 ### MENU ########
 
-Canevas.bind('<Button->',Clic)
+Canevas.bind('<Button-1>',Clic)
 Canevas.bind('<B1-Motion>',Drag)
 Canevas.bind('<ButtonRelease-1>',Release)
 Canevas.pack()
@@ -919,5 +907,3 @@ gifdict={}
 
 
 Mafenetre.mainloop()
-
-Mafenetre.quit()

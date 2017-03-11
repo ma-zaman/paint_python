@@ -39,13 +39,13 @@ def minus():
 	butplus.destroy()
 	Label1.destroy()
 	butminus.destroy()
-	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)
+	butplus = Button(root, text ='+', overrelief='solid', command = plus)
 	butplus.pack(in_=bottom,side = RIGHT)
 
-	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)
+	Label1 = Label(root, text = 'Thickness : %s'%wid)
 	Label1.pack(in_=bottom,side = RIGHT)
 
-	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
+	butminus = Button(root, text ='-', overrelief='solid', command = minus)
 	butminus.pack(in_=bottom,side = RIGHT)
 
 def plus():
@@ -59,13 +59,13 @@ def plus():
 	butplus.destroy()
 	Label1.destroy()
 	butminus.destroy()
-	butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)
+	butplus = Button(root, text ='+', overrelief='solid', command = plus)
 	butplus.pack(in_=bottom,side = RIGHT)
 
-	Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)
+	Label1 = Label(root, text = 'Thickness : %s'%wid)
 	Label1.pack(in_=bottom,side = RIGHT)
 
-	butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
+	butminus = Button(root, text ='-', overrelief='solid', command = minus)
 	butminus.pack(in_=bottom,side = RIGHT)
 
 ### THICKNESS ###
@@ -89,14 +89,7 @@ def Open():
 		Canevas.create_image(pixx,pixy,anchor=NW,image=photo)
 
 
-	Mafenetre.title("Image ")
-
-def Close():
-	Canevas.delete(ALL)
-	Mafenetre.title("Image")
-
-
-
+	root.title("Image ")
 
 
 
@@ -105,52 +98,52 @@ def Close():
 def pencil():
 	global test
 	test = 'pencil'
-	Mafenetre.config(cursor='pencil')
+	root.config(cursor='pencil')
 
 def rubber():
 	global test
 	test = 'rubber'
-	Mafenetre.config(cursor='dotbox')
+	root.config(cursor='dotbox')
 
 def line():
 	global test
 	test = 'line'
-	Mafenetre.config(cursor='tcross')
+	root.config(cursor='tcross')
 
 def fill_rectangle():
 	global test
 	test = 'fill_rectangle'
-	Mafenetre.config(cursor='tcross')
+	root.config(cursor='tcross')
 
 def fill_oval():
 	global test
 	test = 'fill_oval'
-	Mafenetre.config(cursor='circle')
+	root.config(cursor='circle')
 
 def fill_circle():
 	global test
 	test = 'fill_circle'
-	Mafenetre.config(cursor='circle')
+	root.config(cursor='circle')
 
 def rectangle():
 	global test
 	test = 'rectangle'
-	Mafenetre.config(cursor='tcross')
+	root.config(cursor='tcross')
 
 def oval():
 	global test
 	test = 'oval'
-	Mafenetre.config(cursor='circle')
+	root.config(cursor='circle')
 
 def circle():
 	global test
 	test = 'circle'
-	Mafenetre.config(cursor='circle')
+	root.config(cursor='circle')
 
 def arrow():
 	global test
 	test = 'arrow'
-	Mafenetre.config(cursor='arrow')
+	root.config(cursor='arrow')
 
 ### TOOLS #######
 
@@ -188,7 +181,7 @@ def undo():
 		reposy1.append(unposy1[len(unposy1)-1])
 		unposy1.pop()
 
-		Mafenetre.after(1,undo)
+		root.after(1,undo)
 
 	elif untypea[len(untypea)-1] == 'pencil' or untypea[len(untypea)-1] == 'rubber':
 
@@ -223,7 +216,7 @@ def undo():
 			do = 1
 
 		if len(untypea) != 0 and untypea[len(untypea)-do] == 'pencil' or  untypea[len(untypea)-do] == 'rubber' and len(untypea) != 0:
-			Mafenetre.after(1,undo)
+			root.after(1,undo)
 
 
 	elif untypea[len(untypea)-1] == 'line' or untypea[len(untypea)-1] == 'fill_rectangle' or untypea[len(untypea)-1] == 'rectangle' or untypea[len(untypea)-1] == 'fill_oval' or untypea[len(untypea)-1] == 'oval' or untypea[len(untypea)-1] == 'fill_circle' or untypea[len(untypea)-1] == 'circle':
@@ -286,7 +279,7 @@ def redo():
 		unposy1.append(reposy1[len(reposy1)-1])
 		reposy1.pop()
 
-		Mafenetre.after(1,redo)
+		root.after(1,redo)
 
 	elif retypea[len(retypea)-1] == 'pencil':
 
@@ -322,7 +315,7 @@ def redo():
 			test1 += 1
 
 		if len(retypea) != 0 and retypea[len(retypea)-do] == 'pencil':
-			Mafenetre.after(1,redo)
+			root.after(1,redo)
 
 
 	elif retypea[len(retypea)-1] == 'rubber':
@@ -358,7 +351,7 @@ def redo():
 			do = 1
 
 		if len(retypea) != 0 and retypea[len(retypea)-do] == 'rubber':
-			Mafenetre.after(1,redo)
+			root.after(1,redo)
 
 	elif retypea[len(retypea)-1] == 'line':
 
@@ -744,21 +737,71 @@ def Release(event):
 
 
 
-def dele():
-	for i in unlista:
-		Canevas.delete(i)
+def new_page():
+	Canevas.delete(ALL)
 
-	while len(unlista)!=0:
-		unlista.pop(0)
+	while len(unname)!=0:
+		unname.pop(0)
+
+	while len(rename)!=0:
+		rename.pop(0)
+
+	while len(unposx)!=0:
+		unposx.pop(0)
+		unposx1.pop(0)
+		unposy.pop(0)
+		unposy1.pop(0)
+		untypea.pop(0)
+		unwidth.pop(0)
+		uncolor.pop(0)
+
+	while len(reposx)!=0:
+		reposx.pop(0)
+		reposx1.pop(0)
+		reposy.pop(0)
+		reposy1.pop(0)
+		retypea.pop(0)
+		rewidth.pop(0)
+		recolor.pop(0)
+
+	unname.append('none')
+	unposx.append('none')
+	unposx1.append('none')
+	unposy.append('none')
+	unposy1.append('none')
+	untypea.append('none')
+	unwidth.append('none')
+	uncolor.append('none')
+
+	rename.append('none')
+	reposx.append('none')
+	reposx1.append('none')
+	reposy.append('none')
+	reposy1.append('none')
+	retypea.append('none')
+	rewidth.append('none')
+	recolor.append('none')
 
 	n=0
 
 def prin():
-	print 'unlista =',unlista
-	#print 'unposx =',unposx
-	#print 'unposy =',unposy
-	#print 'unposx1 =',unposx1
-	#print 'unposy1 =',unposy1
+	print 'unname =',unname
+	print 'unposx =',unposx
+	print 'unposy =',unposy
+	print 'unposx1 =',unposx1
+	print 'unposy1 =',unposy1
+	print 'untypea =',untypea
+	print 'unwidth =',unwidth
+	print 'uncolor =',uncolor
+
+	print 'rename =',rename
+	print 'reposx =',reposx
+	print 'reposy =',reposy
+	print 'reposx1 =',reposx1
+	print 'reposy1 =',reposy1
+	print 'retypea =',retypea
+	print 'rewidth =',rewidth
+	print 'recolor =',recolor
 
 def color_palette(N,num):
 	delta = 255. / (N/3)
@@ -781,23 +824,51 @@ def color_palette(N,num):
 	return '#' + hex(int(R))[2:].zfill(2) + hex(int(G))[2:].zfill(2)+ hex(int(B))[2:].zfill(2)
 
 def color_chooser(event):
-	global coul
+	global coul,coulx,couly,view,n
+	Canevas1.delete(view)
 	n= 100
 	coulx = event.x
-	coulx = (coulx/5)+1
-	if coulx > 99:
-		coulx = 99
-	coul = color_palette(n,1.0/float(n)*float(coulx))
+	couly = event.y
+	coulx1 = (coulx/5)+1
+	if coulx1 > 99:
+		coulx1 = 99
+	elif coulx1 < 0:
+		coulx1 = 0
+	coul = var_coul(n,1.0/float(n)*float(coulx1))
+	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
+
+def color_viewer(event):
+	global view,coul
+	coulx = event.x
+	couly = event.y
+	coulx1 = (coulx/5)+1
+	if coulx1 > 99:
+		coulx1 = 99
+		coulx = 500
+	elif coulx1 < 0:
+		coulx1 = 0
+		coulx = 0
+	if couly > 50:
+		couly = 50
+
+	elif couly < 0:
+		couly = 0
+	coul = var_coul(n,1.0/float(n)*float(coulx1))
+	Canevas1.delete(view)
+	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
 
 
 def color():
-	Mafenetre1 = Tk()
-	Mafenetre1.title('Pion')
-	Mafenetre1.config(cursor='tcross')
-	Canevas1 = Canvas(Mafenetre1, width = 500, height =50,bg = 'white')
-	Canevas1.bind('<Button-1>',color_chooser)
+	global Canevas1,view
+	root1 = Tk()
+	root1.title('Pion')
+	root1.config(cursor='tcross')
+	Canevas1 = Canvas(root1, width = 500, height =50,bg = 'white')
+	Canevas1.bind('<Button-1>',coul_choo)
+	Canevas1.bind('<B1-Motion>',color_viewer)
 	Canevas1.focus_set()
 	Canevas1.pack()
+	view = Canevas1.create_oval(-5,-5,0,0,fill=coul)
 	k=0
 	n= 100
 	azex=0
@@ -805,22 +876,25 @@ def color():
 	azey=0
 	azey1=50
 	for k in range(n):
-		c= color_palette(n,1.0/float(n)*float(k))
+		c= var_coul(n,1.0/float(n)*float(k))
 		Canevas1.create_rectangle(azex,azey,azex1,azey1,outline=c,fill=c)
 		azex+=5
 		azex1+=5
 		Canevas1.focus_set()
 
+def save():
+	Canevas.update()
+	name = str(raw_input('Picture name: '))
+	fil=Canevas.postscript(file="%s.ps"%name, colormode='color')
+	print '%s has been saved'%name
 
 
-Width = 500 #int(raw_input('Width :'))
-Height = 500 #int(raw_input('Height :'))
 
-Mafenetre = Tk()
-Mafenetre.title('Pion')
+W = int(raw_input('Width :'))
+H = int(raw_input('Height :'))
 
-W = Width
-H = Height
+root = Tk()
+root.title('Pion')
 
 test = 'pencil'
 n = 0
@@ -831,7 +905,7 @@ coul = 'black'
 
 wid = 1
 
-Canevas = Canvas(Mafenetre, width = W, height =H,bg = 'white')
+Canevas = Canvas(root, width = W, height =H,bg = 'white')
 Canevas.focus_set()
 
 
@@ -839,10 +913,10 @@ Canevas.focus_set()
 
 ### BUTTON SETTTINGS
 
-top = Frame(Mafenetre)
+top = Frame(root)
 top.pack(side=TOP)
 
-bottom = Frame(Mafenetre)
+bottom = Frame(root)
 bottom.pack(side=BOTTOM)
 
 ### BUTTON SETTTINGS
@@ -851,49 +925,48 @@ bottom.pack(side=BOTTOM)
 
 ### TOOLS BUTTON
 
-Button(Mafenetre, text ='Pencil',relief=RAISED,cursor="pencil",command = pencil).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Rubber',relief=RAISED,cursor="dotbox", command = rubber).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Line',relief=RAISED,cursor="tcross", command = line).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Fill Rectangle',relief=RAISED,cursor="tcross", command = fill_rectangle).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Fill Oval',relief=RAISED,cursor="circle", command = fill_oval).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Fill Circle',relief=RAISED,cursor="circle", command = fill_circle).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Rectangle',relief=RAISED,cursor="tcross", command = rectangle).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Oval',relief=RAISED,cursor="circle", command = oval).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Circle',relief=RAISED,cursor="circle", command = circle).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='Arrow',relief=RAISED,cursor="arrow", command = arrow).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='test', command = dele).pack(in_=top,side = LEFT)
-Button(Mafenetre, text ='test1', command = prin).pack(in_=top,side = LEFT)
+Button(root, text ='Pencil',relief=RAISED,cursor="pencil",command = pencil).pack(in_=top,side = LEFT)
+Button(root, text ='Rubber',relief=RAISED,cursor="dotbox", command = rubber).pack(in_=top,side = LEFT)
+Button(root, text ='Line',relief=RAISED,cursor="tcross", command = line).pack(in_=top,side = LEFT)
+Button(root, text ='Fill Rectangle',relief=RAISED,cursor="tcross", command = fill_rectangle).pack(in_=top,side = LEFT)
+Button(root, text ='Fill Oval',relief=RAISED,cursor="circle", command = fill_oval).pack(in_=top,side = LEFT)
+Button(root, text ='Fill Circle',relief=RAISED,cursor="circle", command = fill_circle).pack(in_=top,side = LEFT)
+Button(root, text ='Rectangle',relief=RAISED,cursor="tcross", command = rectangle).pack(in_=top,side = LEFT)
+Button(root, text ='Oval',relief=RAISED,cursor="circle", command = oval).pack(in_=top,side = LEFT)
+Button(root, text ='Circle',relief=RAISED,cursor="circle", command = circle).pack(in_=top,side = LEFT)
+Button(root, text ='Arrow',relief=RAISED,cursor="arrow", command = arrow).pack(in_=top,side = LEFT)
+Button(root, text ='test1', command = prin).pack(in_=top,side = LEFT)
 
 ### TOOLS BUTTON
 
 
 
-butplus = Button(Mafenetre, text ='+', overrelief='solid', command = plus)
+butplus = Button(root, text ='+', overrelief='solid', command = plus)
 butplus.pack(in_=bottom,side = RIGHT)
 
-Label1 = Label(Mafenetre, text = 'Thickness : %s'%wid)
+Label1 = Label(root, text = 'Thickness : %s'%wid)
 Label1.pack(in_=bottom,side = RIGHT)
 
-butminus = Button(Mafenetre, text ='-', overrelief='solid', command = minus)
+butminus = Button(root, text ='-', overrelief='solid', command = minus)
 butminus.pack(in_=bottom,side = RIGHT)
 
 
 ### MENU ########
 
-menubar = Menu(Mafenetre)
+menubar = Menu(root)
 
 menufile = Menu(menubar,tearoff=0)
 menufile.add_command(label="Open an image",command=Open)
-menufile.add_command(label="New page",command=Close)
-#menufile.add_command(label="Save",command=save)
+menufile.add_command(label="New page",command=new_page)
+menufile.add_command(label="Save",command=save)
 menufile.add_command(label="Color palette",command=color)
-menufile.add_command(label="Quit",command=Mafenetre.destroy)
+menufile.add_command(label="Quit",command=root.destroy)
 menubar.add_cascade(label="File", menu=menufile)
 
 menubar.add_command(label="Undo",command=undo)
 menubar.add_command(label="Redo",command=redo)
 
-Mafenetre.config(menu=menubar)
+root.config(menu=menubar)
 
 ### MENU ########
 
@@ -906,4 +979,4 @@ Canevas.pack()
 gifdict={}
 
 
-Mafenetre.mainloop()
+root.mainloop()

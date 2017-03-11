@@ -834,7 +834,7 @@ def color_chooser(event):
 		coulx1 = 99
 	elif coulx1 < 0:
 		coulx1 = 0
-	coul = var_coul(n,1.0/float(n)*float(coulx1))
+	coul = color_palette(n,1.0/float(n)*float(coulx1))
 	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
 
 def color_viewer(event):
@@ -853,7 +853,7 @@ def color_viewer(event):
 
 	elif couly < 0:
 		couly = 0
-	coul = var_coul(n,1.0/float(n)*float(coulx1))
+	coul = color_palette(n,1.0/float(n)*float(coulx1))
 	Canevas1.delete(view)
 	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
 
@@ -876,7 +876,7 @@ def color():
 	azey=0
 	azey1=50
 	for k in range(n):
-		c= var_coul(n,1.0/float(n)*float(k))
+		c= color_palette(n,1.0/float(n)*float(k))
 		Canevas1.create_rectangle(azex,azey,azex1,azey1,outline=c,fill=c)
 		azex+=5
 		azex1+=5

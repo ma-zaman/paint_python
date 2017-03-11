@@ -864,7 +864,7 @@ def color():
 	root1.title('Pion')
 	root1.config(cursor='tcross')
 	Canevas1 = Canvas(root1, width = 500, height =50,bg = 'white')
-	Canevas1.bind('<Button-1>',coul_choo)
+	Canevas1.bind('<Button-1>',color_chooser)
 	Canevas1.bind('<B1-Motion>',color_viewer)
 	Canevas1.focus_set()
 	Canevas1.pack()

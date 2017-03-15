@@ -25,7 +25,7 @@ reposy1 = ['none']
 
 ### THICKNESS ###
 
-def minus():
+def minus(event):
 	global wid,Label1,butplus,butminus
 	if wid > 0:
 		wid -= 1
@@ -48,7 +48,7 @@ def minus():
 	butminus = Button(root, text ='-', overrelief='solid', command = minus)
 	butminus.pack(in_=bottom,side = RIGHT)
 
-def plus():
+def plus(event):
 	global wid,Label1,butplus,butminus
 	if wid < 100:
 		wid += 1
@@ -810,17 +810,14 @@ def color_palette(N,num):
 		R = 0
 		G = delta * num
 		B = 255 - delta * num
-		print '1',num
 	elif N/3 <= num < 2*N/3:
 		R = delta * (num - N/3)
 		G = 255
 		B = 0
-		print '2'
 	elif 2*N/3 <= num <= N:
 		R = 255
 		G = 255 - delta * (num - 2*N/3)
 		B = 0
-		print '3'
 	return '#' + hex(int(R))[2:].zfill(2) + hex(int(G))[2:].zfill(2)+ hex(int(B))[2:].zfill(2)
 
 def color_chooser(event):
@@ -973,6 +970,8 @@ root.config(menu=menubar)
 Canevas.bind('<Button-1>',Clic)
 Canevas.bind('<B1-Motion>',Drag)
 Canevas.bind('<ButtonRelease-1>',Release)
+Canevas.bind("<Button-4>", plus)
+Canevas.bind("<Button-5>", minus)
 Canevas.pack()
 
 

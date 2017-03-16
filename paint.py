@@ -195,10 +195,10 @@ def undo():
 		unposy1.pop()
 
 
-		if len(untypea) == 1 or len(untypea) != 'pencil' or len(untypea) != 'rubber':
+		if len(untypea) == 1 or len(untypea) != 'pencil' or len(untypea) != 'rubber' or len(untypea) != 'link_pencil':
 			do = 1
 
-		if len(untypea) != 0 and untypea[len(untypea)-do] == 'pencil' or  untypea[len(untypea)-do] == 'rubber' and len(untypea) != 0:
+		if len(untypea) != 0 and untypea[len(untypea)-do] == 'pencil' or  untypea[len(untypea)-do] == 'rubber' and len(untypea) != 0 or  untypea[len(untypea)-do] == 'link_pencil' and len(untypea) != 0:
 			root.after(1,undo)
 
 
@@ -832,25 +832,6 @@ def new_page():
 	recolor.append('none')
 
 	n=0
-
-def prin():
-	print 'unname =',unname
-	print 'unposx =',unposx
-	print 'unposy =',unposy
-	print 'unposx1 =',unposx1
-	print 'unposy1 =',unposy1
-	print 'untypea =',untypea
-	print 'unwidth =',unwidth
-	print 'uncolor =',uncolor
-
-	print 'rename =',rename
-	print 'reposx =',reposx
-	print 'reposy =',reposy
-	print 'reposx1 =',reposx1
-	print 'reposy1 =',reposy1
-	print 'retypea =',retypea
-	print 'rewidth =',rewidth
-	print 'recolor =',recolor
 
 def color_palette(N,num):
 	delta = 255. / (N/3)

@@ -4,7 +4,7 @@ import tkMessageBox
 
 
 
-unlista = ['none']
+unname = ['none']
 untypea = ['none']
 unwidth = ['none']
 uncolor = ['none']
@@ -13,7 +13,7 @@ unposy = ['none']
 unposx1 = ['none']
 unposy1 = ['none']
 
-relista = ['none']
+rename = ['none']
 retypea = ['none']
 rewidth = ['none']
 recolor = ['none']
@@ -26,7 +26,7 @@ reposy1 = ['none']
 ### THICKNESS ###
 
 def minus(event):
-	global wid,Label1,butplus,butminus
+	global wid,Label1
 	if wid > 0:
 		wid -= 1
 		if wid == 0:
@@ -36,17 +36,9 @@ def minus(event):
 		print 'min'
 		wid = 1
 
-	butplus.destroy()
 	Label1.destroy()
-	butminus.destroy()
-	butplus = Button(root, text ='+', overrelief='solid', command = plus)
-	butplus.pack(in_=bottom,side = RIGHT)
-
 	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.pack(in_=bottom,side = RIGHT)
-
-	butminus = Button(root, text ='-', overrelief='solid', command = minus)
-	butminus.pack(in_=bottom,side = RIGHT)
+	Label1.pack(side = BOTTOM)
 
 def plus(event):
 	global wid,Label1,butplus,butminus
@@ -56,17 +48,9 @@ def plus(event):
 	else:
 		print 'max'
 
-	butplus.destroy()
 	Label1.destroy()
-	butminus.destroy()
-	butplus = Button(root, text ='+', overrelief='solid', command = plus)
-	butplus.pack(in_=bottom,side = RIGHT)
-
 	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.pack(in_=bottom,side = RIGHT)
-
-	butminus = Button(root, text ='-', overrelief='solid', command = minus)
-	butminus.pack(in_=bottom,side = RIGHT)
+	Label1.pack(side = BOTTOM)
 
 ### THICKNESS ###
 
@@ -89,9 +73,6 @@ def Open():
 		Canevas.create_image(pixx,pixy,anchor=NW,image=photo)
 
 
-	root.title("Image ")
-
-
 
 ### TOOLS #######
 
@@ -110,19 +91,19 @@ def line():
 	test = 'line'
 	root.config(cursor='tcross')
 
-def fill_rectangle():
+def filled_rectangle():
 	global test
-	test = 'fill_rectangle'
+	test = 'filled_rectangle'
 	root.config(cursor='tcross')
 
-def fill_oval():
+def filled_oval():
 	global test
-	test = 'fill_oval'
+	test = 'filled_oval'
 	root.config(cursor='circle')
 
-def fill_circle():
+def filled_circle():
 	global test
-	test = 'fill_circle'
+	test = 'filled_circle'
 	root.config(cursor='circle')
 
 def rectangle():
@@ -147,7 +128,9 @@ def arrow():
 
 ### TOOLS #######
 
-
+def undo1(event):
+	touche = event.keysym
+	undo()
 
 def undo():
 	global test1
@@ -157,8 +140,8 @@ def undo():
 
 	elif untypea[len(untypea)-1] == 'none':
 
-		relista.append(unlista[len(unlista)-1])
-		unlista.pop()
+		rename.append(unname[len(unname)-1])
+		unname.pop()
 
 		retypea.append(untypea[len(untypea)-1])
 		untypea.pop()
@@ -183,12 +166,12 @@ def undo():
 
 		root.after(1,undo)
 
-	elif untypea[len(untypea)-1] == 'pencil' or untypea[len(untypea)-1] == 'rubber':
+	elif untypea[len(untypea)-1] == 'pencil' or untypea[len(untypea)-1] == 'rubber' or untypea[len(untypea)-1] == 'link_pencil':
 
-		Canevas.delete(unlista[len(unlista)-1])
+		Canevas.delete(unname[len(unname)-1])
 
-		relista.append(unlista[len(unlista)-1])
-		unlista.pop()
+		rename.append(unname[len(unname)-1])
+		unname.pop()
 
 		retypea.append(untypea[len(untypea)-1])
 		untypea.pop()
@@ -219,12 +202,12 @@ def undo():
 			root.after(1,undo)
 
 
-	elif untypea[len(untypea)-1] == 'line' or untypea[len(untypea)-1] == 'fill_rectangle' or untypea[len(untypea)-1] == 'rectangle' or untypea[len(untypea)-1] == 'fill_oval' or untypea[len(untypea)-1] == 'oval' or untypea[len(untypea)-1] == 'fill_circle' or untypea[len(untypea)-1] == 'circle':
+	elif untypea[len(untypea)-1] == 'line' or untypea[len(untypea)-1] == 'filled_rectangle' or untypea[len(untypea)-1] == 'rectangle' or untypea[len(untypea)-1] == 'filled_oval' or untypea[len(untypea)-1] == 'oval' or untypea[len(untypea)-1] == 'filled_circle' or untypea[len(untypea)-1] == 'circle':
 
-		Canevas.delete(unlista[len(unlista)-1])
+		Canevas.delete(unname[len(unname)-1])
 
-		relista.append(unlista[len(unlista)-1])
-		unlista.pop()
+		rename.append(unname[len(unname)-1])
+		unname.pop()
 
 		retypea.append(untypea[len(untypea)-1])
 		untypea.pop()
@@ -248,6 +231,10 @@ def undo():
 		unposy1.pop()
 
 
+def redo1(event):
+	touche = event.keysym
+	redo()
+
 def redo():
 	global test1
 	do = 2
@@ -255,8 +242,8 @@ def redo():
 		print 'error'
 
 	elif retypea[len(retypea)-1] == 'none':
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -283,10 +270,10 @@ def redo():
 
 	elif retypea[len(retypea)-1] == 'pencil':
 
-		relista[len(relista)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -317,13 +304,49 @@ def redo():
 		if len(retypea) != 0 and retypea[len(retypea)-do] == 'pencil':
 			root.after(1,redo)
 
+	elif retypea[len(retypea)-1] == 'link_pencil':
+
+		rename[len(rename)-1] = Canevas.create_line(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],fill=recolor[len(recolor)-1])
+
+		unname.append(rename[len(rename)-1])
+		rename.pop()
+
+		untypea.append(retypea[len(retypea)-1])
+		retypea.pop()
+
+		unwidth.append(rewidth[len(rewidth)-1])
+		rewidth.pop()
+
+		uncolor.append(recolor[len(recolor)-1])
+		recolor.pop()
+
+		unposx.append(reposx[len(reposx)-1])
+		reposx.pop()
+
+		unposy.append(reposy[len(reposy)-1])
+		reposy.pop()
+
+		unposx1.append(reposx1[len(reposx1)-1])
+		reposx1.pop()
+
+		unposy1.append(reposy1[len(reposy1)-1])
+		reposy1.pop()
+
+
+		if len(retypea) == 1:
+			do = 1
+			test1 += 1
+
+		if len(retypea) != 0 and retypea[len(retypea)-do] == 'link_pencil':
+			root.after(1,redo)
+
 
 	elif retypea[len(retypea)-1] == 'rubber':
 
-		relista[len(relista)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=wid,outline='white',fill='white')
+		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=wid,outline='white',fill='white')
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -355,10 +378,10 @@ def redo():
 
 	elif retypea[len(retypea)-1] == 'line':
 
-		relista[len(relista)-1] = Canevas.create_line(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],fill=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_line(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],fill=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -382,12 +405,12 @@ def redo():
 		reposy1.pop()
 
 
-	elif retypea[len(retypea)-1] == 'fill_rectangle':
+	elif retypea[len(retypea)-1] == 'filled_rectangle':
 
-		relista[len(relista)-1] = Canevas.create_rectangle(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_rectangle(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -413,10 +436,10 @@ def redo():
 
 	elif retypea[len(retypea)-1] == 'rectangle':
 
-		relista[len(relista)-1] = Canevas.create_rectangle(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_rectangle(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -440,12 +463,12 @@ def redo():
 		reposy1.pop()
 
 
-	elif retypea[len(retypea)-1] == 'fill_oval' or retypea[len(retypea)-1] == 'fill_circle':
+	elif retypea[len(retypea)-1] == 'filled_oval' or retypea[len(retypea)-1] == 'filled_circle':
 
-		relista[len(relista)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1],fill=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -471,10 +494,10 @@ def redo():
 
 	elif retypea[len(retypea)-1] == 'oval' or retypea[len(retypea)-1] == 'circle':
 
-		relista[len(relista)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1])
+		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],outline=recolor[len(recolor)-1])
 
-		unlista.append(relista[len(relista)-1])
-		relista.pop()
+		unname.append(rename[len(rename)-1])
+		rename.pop()
 
 		untypea.append(retypea[len(retypea)-1])
 		retypea.pop()
@@ -499,13 +522,15 @@ def redo():
 
 
 def Clic(event):
-	global X,Y,n,m
+	global X,Y,n,m,X2,Y2
 	X = event.x
 	Y = event.y
+	X2 = X
+	Y2 = Y
 	n += 1
 	m = str(n)
 	if test != 'arrow':
-		unlista.append('none')
+		unname.append('none')
 		untypea.append('none')
 		unwidth.append('none')
 		uncolor.append('none')
@@ -515,30 +540,30 @@ def Clic(event):
 		unposy1.append('none')
 
 def Drag(event):
-	global X,Y,test,line,n,m,coul,X1,Y1,resx,resx,resy,resx1,resy1
+	global X,Y,test,line,n,m,coul,X1,Y1,resx,resx,resy,resx1,resy1,X2,Y2
 	X1 = event.x
 	Y1 = event.y
 
 	if test == 'pencil':
-		m = Canevas.create_oval(X1-1,Y1-1,X1+1,Y1+1,width=wid,outline=coul,fill=coul)
+		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid,outline=coul,fill=coul)
 
 	elif test == 'rubber':
-		m = Canevas.create_oval(X1-1,Y1-1,X1+1,Y1+1,width=wid,outline='white',fill='white')
+		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid,outline='white',fill='white')
 
 	elif test == 'line':
 		Canevas.delete(m)
 		m = Canevas.create_line(X,Y,X1,Y1,width=wid,fill=coul)
 
-	elif test == 'fill_rectangle':
+	elif test == 'filled_rectangle':
 		Canevas.delete(m)
 		m = Canevas.create_rectangle(X,Y,X1,Y1,outline=coul,fill=coul)
 
-	elif test == 'fill_oval':
+	elif test == 'filled_oval':
 		Canevas.delete(m)
 		resx = X-X1
 		resy = Y-Y1
 		Canevas.delete(m)
-		m = Canevas.create_oval(X,Y,X-resx,Y-resy,outline=coul,fill=coul)
+		m = Canevas.create_oval(X+resx,Y+resy,X-resx,Y-resy,outline=coul,fill=coul)
 
 	elif test == 'rectangle':
 		Canevas.delete(m)
@@ -549,7 +574,7 @@ def Drag(event):
 		resx = X-X1
 		resy = Y-Y1
 		Canevas.delete(m)
-		m = Canevas.create_oval(X,Y,X-resx,Y-resy,width=wid,outline=coul)
+		m = Canevas.create_oval(X+resx,Y+resy,X-resx,Y-resy,width=wid,outline=coul)
 
 	elif test == 'circle':
 		Canevas.delete(m)
@@ -594,7 +619,7 @@ def Drag(event):
 				Canevas.delete(m)
 				m = Canevas.create_oval(X-resx,Y+resx,X+resx,Y-resx,width=wid,outline=coul)
 
-	elif test == 'fill_circle':
+	elif test == 'filled_circle':
 		Canevas.delete(m)
 		resx = X-X1
 		resy = Y-Y1
@@ -637,9 +662,18 @@ def Drag(event):
 				Canevas.delete(m)
 				m = Canevas.create_oval(X-resx,Y+resx,X+resx,Y-resx,outline=coul,fill=coul)
 
+	elif test == 'arrow':
+		W = X1
+		H = Y1
+		if W <= 50:
+			W = 50
+		if H <= 50:
+			H = 50
+		Canevas.update()
+		Canevas.config(width = W, height =H)
 
-	if len(unlista)>3000:
-		unlista.pop(0)
+	if len(unname)>1000000:
+		unname.pop(0)
 		untypea.pop(0)
 		unwidth.pop(0)
 		uncolor.pop(0)
@@ -650,37 +684,52 @@ def Drag(event):
 
 
 	if test == 'pencil' or test == 'rubber':
-		unlista.append(str(m))
+		unname.append(str(m))
 		untypea.append(test)
 		unwidth.append(wid)
 		uncolor.append(coul)
-		unposx.append(X1-1)
-		unposy.append(Y1-1)
-		unposx1.append(X1+1)
-		unposy1.append(Y1+1)
+		unposx.append(X1)
+		unposy.append(Y1)
+		unposx1.append(X1)
+		unposy1.append(Y1)
+
+		if test == 'pencil':
+			n += 1
+			m = str(n)
+			m = Canevas.create_line(X1,Y1,X2,Y2,width=wid,fill=coul)
+			unname.append(str(m))
+			untypea.append('link_pencil')
+			unwidth.append(wid)
+			uncolor.append(coul)
+			unposx.append(X1)
+			unposy.append(Y1)
+			unposx1.append(X2)
+			unposy1.append(Y2)
+			X2=X1
+			Y2=Y1
 
 
 
 
 def Release(event):
 	if test != 'pencil' and test != 'rubber' and test != 'arrow':
-		unlista.append(str(m))
+		unname.append(str(m))
 		untypea.append(test)
 		unwidth.append(wid)
 		uncolor.append(coul)
-		if test == 'line' or test == 'fill_rectangle' or test == 'rectangle':
+		if test == 'line' or test == 'filled_rectangle' or test == 'rectangle':
 			unposx.append(X)
 			unposy.append(Y)
 			unposx1.append(X1)
 			unposy1.append(Y1)
 
-		elif test == 'fill_oval' or test == 'oval':
-			unposx.append(X)
-			unposy.append(Y)
+		elif test == 'filled_oval' or test == 'oval':
+			unposx.append(X+resx)
+			unposy.append(Y+resy)
 			unposx1.append(X-resx)
 			unposy1.append(Y-resy)
 
-		elif test == 'fill_circle' or test == 'circle':
+		elif test == 'filled_circle' or test == 'circle':
 			if resx<=0 and resy<=0:
 				if resx <= resy:
 					unposx.append(X+resx)
@@ -857,13 +906,10 @@ def color_viewer(event):
 
 def color():
 	global Canevas1,view
-	root1 = Tk()
-	root1.title('Pion')
-	root1.config(cursor='tcross')
-	Canevas1 = Canvas(root1, width = 500, height =50,bg = 'white')
+	Canevas1 = Canvas(root, width = 500, height =50,bg = 'white')
+	Canevas1.config(cursor='tcross')
 	Canevas1.bind('<Button-1>',color_chooser)
 	Canevas1.bind('<B1-Motion>',color_viewer)
-	Canevas1.focus_set()
 	Canevas1.pack()
 	view = Canevas1.create_oval(-5,-5,0,0,fill=coul)
 	k=0
@@ -877,7 +923,6 @@ def color():
 		Canevas1.create_rectangle(azex,azey,azex1,azey1,outline=c,fill=c)
 		azex+=5
 		azex1+=5
-		Canevas1.focus_set()
 
 def save():
 	Canevas.update()
@@ -887,13 +932,13 @@ def save():
 
 
 
-W = int(raw_input('Width :'))
-H = int(raw_input('Height :'))
+W = 500
+H = 500
 
 root = Tk()
 root.title('Pion')
 
-test = 'pencil'
+test = 'arrow'
 n = 0
 
 test1 = 1
@@ -907,58 +952,38 @@ Canevas.focus_set()
 
 
 
-
-### BUTTON SETTTINGS
-
-top = Frame(root)
-top.pack(side=TOP)
-
-bottom = Frame(root)
-bottom.pack(side=BOTTOM)
-
-### BUTTON SETTTINGS
-
-
-
-### TOOLS BUTTON
-
-Button(root, text ='Pencil',relief=RAISED,cursor="pencil",command = pencil).pack(in_=top,side = LEFT)
-Button(root, text ='Rubber',relief=RAISED,cursor="dotbox", command = rubber).pack(in_=top,side = LEFT)
-Button(root, text ='Line',relief=RAISED,cursor="tcross", command = line).pack(in_=top,side = LEFT)
-Button(root, text ='Fill Rectangle',relief=RAISED,cursor="tcross", command = fill_rectangle).pack(in_=top,side = LEFT)
-Button(root, text ='Fill Oval',relief=RAISED,cursor="circle", command = fill_oval).pack(in_=top,side = LEFT)
-Button(root, text ='Fill Circle',relief=RAISED,cursor="circle", command = fill_circle).pack(in_=top,side = LEFT)
-Button(root, text ='Rectangle',relief=RAISED,cursor="tcross", command = rectangle).pack(in_=top,side = LEFT)
-Button(root, text ='Oval',relief=RAISED,cursor="circle", command = oval).pack(in_=top,side = LEFT)
-Button(root, text ='Circle',relief=RAISED,cursor="circle", command = circle).pack(in_=top,side = LEFT)
-Button(root, text ='Arrow',relief=RAISED,cursor="arrow", command = arrow).pack(in_=top,side = LEFT)
-Button(root, text ='test1', command = prin).pack(in_=top,side = LEFT)
-
-### TOOLS BUTTON
-
-
-
-butplus = Button(root, text ='+', overrelief='solid', command = plus)
-butplus.pack(in_=bottom,side = RIGHT)
-
 Label1 = Label(root, text = 'Thickness : %s'%wid)
-Label1.pack(in_=bottom,side = RIGHT)
-
-butminus = Button(root, text ='-', overrelief='solid', command = minus)
-butminus.pack(in_=bottom,side = RIGHT)
-
+Label1.pack(side = BOTTOM)
 
 ### MENU ########
 
 menubar = Menu(root)
 
+menutools = Menu(menubar,tearoff=0)
+menufilled = Menu(menutools,tearoff=0)
+menuempty = Menu(menutools,tearoff=0)
 menufile = Menu(menubar,tearoff=0)
 menufile.add_command(label="Open an image",command=Open)
 menufile.add_command(label="New page",command=new_page)
 menufile.add_command(label="Save",command=save)
-menufile.add_command(label="Color palette",command=color)
 menufile.add_command(label="Quit",command=root.destroy)
 menubar.add_cascade(label="File", menu=menufile)
+
+menutools.add_command(label="Pencil",command = pencil)
+menutools.add_command(label="Rubber", command = rubber)
+menutools.add_command(label="Line", command = line)
+menutools.add_command(label="Arrow", command = arrow)
+menubar.add_cascade(label="Tools",menu=menutools)
+
+menutools.add_cascade(label="Filled forms",menu=menufilled)
+menufilled.add_command(label="Filled Rectangle", command = filled_rectangle)
+menufilled.add_command(label="Filled Oval", command = filled_oval)
+menufilled.add_command(label="Filled circle", command = filled_circle)
+
+menutools.add_cascade(label="Empty forms",menu=menuempty)
+menuempty.add_command(label="Rectangle", command = rectangle)
+menuempty.add_command(label="Oval", command = oval)
+menuempty.add_command(label="circle", command = circle)
 
 menubar.add_command(label="Undo",command=undo)
 menubar.add_command(label="Redo",command=redo)
@@ -972,10 +997,12 @@ Canevas.bind('<B1-Motion>',Drag)
 Canevas.bind('<ButtonRelease-1>',Release)
 Canevas.bind("<Button-4>", plus)
 Canevas.bind("<Button-5>", minus)
+Canevas.bind('<Control-z>',undo1)
+Canevas.bind("<Control-y>", redo1)
 Canevas.pack()
 
 
 gifdict={}
-
+color()
 
 root.mainloop()

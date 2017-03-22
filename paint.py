@@ -1,8 +1,10 @@
 from Tkinter import *
 import tkFileDialog
 import tkMessageBox
+import tkFont
 
 
+letter = []
 
 unname = ['none']
 untypea = ['none']
@@ -12,6 +14,7 @@ unposx = ['none']
 unposy = ['none']
 unposx1 = ['none']
 unposy1 = ['none']
+unpic = ['none']
 
 rename = ['none']
 retypea = ['none']
@@ -21,6 +24,7 @@ reposx = ['none']
 reposy = ['none']
 reposx1 = ['none']
 reposy1 = ['none']
+repic = ['none']
 
 
 ### THICKNESS ###
@@ -38,7 +42,7 @@ def minus(event):
 
 	Label1.destroy()
 	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.pack(side = BOTTOM)
+	Label1.grid(row=2,column=0)
 
 def plus(event):
 	global wid,Label1,butplus,butminus
@@ -50,28 +54,27 @@ def plus(event):
 
 	Label1.destroy()
 	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.pack(side = BOTTOM)
+	Label1.grid(row=2,column=0)
 
 ### THICKNESS ###
 
 def Open():
+	global test,picture
 	filename = tkFileDialog.askopenfilename()
 
-	photo = PhotoImage(file=filename)
-	gifdict[filename] = photo
+	picture = PhotoImage(file=filename)
+	gifdict[filename] = picture
 
-	rep = tkMessageBox.askyesno(photo,'Do you want to adjust the canvas with the picture ?')
+	rep = tkMessageBox.askyesno(picture,'Do you want to adjust the canvas with the picture ?')
 
 	if rep == True:
-		Canevas.create_image(0,0,anchor=NW,image=photo)
-		Canevas.config(height=photo.height(),width=photo.width())
+		Canevas.create_image(0,0,anchor=NW,image=picture)
+		Canevas.config(height=picture.height(),width=picture.width())
 
 	else:
-		tkMessageBox.showinfo('test','look at the Terminal')
-		pixx = int(raw_input('Choose an pixel for your anchor (X):'))
-		pixy = int(raw_input('Choose an pixel for your anchor (Y):'))
-		Canevas.create_image(pixx,pixy,anchor=NW,image=photo)
-
+		test = 'picture'
+		tkMessageBox.showinfo('test','Press the left button to place the center of the picture')
+		root.config(cursor='tcross')
 
 
 ### TOOLS #######
@@ -126,10 +129,15 @@ def arrow():
 	test = 'arrow'
 	root.config(cursor='arrow')
 
+def text():
+	global test
+	test = 'text'
+	root.config(cursor='xterm')
+
 ### TOOLS #######
 
 def undo1(event):
-	touche = event.keysym
+	key = event.keysym
 	undo()
 
 def undo():
@@ -166,7 +174,7 @@ def undo():
 
 		root.after(1,undo)
 
-	elif untypea[len(untypea)-1] == 'pencil' or untypea[len(untypea)-1] == 'rubber' or untypea[len(untypea)-1] == 'link_pencil':
+	elif untypea[len(untypea)-1] == 'pencil' or untypea[len(untypea)-1] == 'rubber' or untypea[len(untypea)-1] == 'link_pencil' or untypea[len(untypea)-1] == 'link_gomme':
 
 		Canevas.delete(unname[len(unname)-1])
 
@@ -195,10 +203,10 @@ def undo():
 		unposy1.pop()
 
 
-		if len(untypea) == 1 or len(untypea) != 'pencil' or len(untypea) != 'rubber' or len(untypea) != 'link_pencil':
+		if len(untypea) == 1 or len(untypea) != 'pencil' or len(untypea) != 'rubber' or len(untypea) != 'link_pencil' or len(untypea) == 'link_gomme':
 			do = 1
 
-		if len(untypea) != 0 and untypea[len(untypea)-do] == 'pencil' or  untypea[len(untypea)-do] == 'rubber' and len(untypea) != 0 or  untypea[len(untypea)-do] == 'link_pencil' and len(untypea) != 0:
+		if len(untypea) != 0 and (untypea[len(untypea)-do] == 'pencil' or untypea[len(untypea)-do] == 'rubber' or untypea[len(untypea)-do] == 'link_pencil' or untypea[len(untypea)-do] == 'link_rubber'):
 			root.after(1,undo)
 
 
@@ -230,9 +238,28 @@ def undo():
 		reposy1.append(unposy1[len(unposy1)-1])
 		unposy1.pop()
 
+	'''elif untypea[len(untypea)-1] == 'picture':
+
+		Canevas.delete(unname[len(unname)-1])
+
+		rename.append(unname[len(unname)-1])
+		unname.pop()
+
+		retypea.append(untypea[len(untypea)-1])
+		untypea.pop()
+
+		reposx.append(unposx[len(unposx)-1])
+		unposx.pop()
+
+		reposy.append(unposy[len(unposy)-1])
+		unposy.pop()
+
+		repic.append(unpic[len(unpic)-1])
+		unpic.pop()'''
+
 
 def redo1(event):
-	touche = event.keysym
+	key = event.keysym
 	redo()
 
 def redo():
@@ -343,7 +370,7 @@ def redo():
 
 	elif retypea[len(retypea)-1] == 'rubber':
 
-		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=wid,outline='white',fill='white')
+		rename[len(rename)-1] = Canevas.create_oval(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],outline='white',fill='white')
 
 		unname.append(rename[len(rename)-1])
 		rename.pop()
@@ -374,6 +401,42 @@ def redo():
 			do = 1
 
 		if len(retypea) != 0 and retypea[len(retypea)-do] == 'rubber':
+			root.after(1,redo)
+
+	elif retypea[len(retypea)-1] == 'link_gomme':
+
+		rename[len(rename)-1] = Canevas.create_line(reposx[len(reposx)-1],reposy[len(reposy)-1],reposx1[len(reposx1)-1],reposy1[len(reposy1)-1],width=rewidth[len(rewidth)-1],fill=recolor[len(recolor)-1])
+
+		unname.append(rename[len(rename)-1])
+		rename.pop()
+
+		untypea.append(retypea[len(retypea)-1])
+		retypea.pop()
+
+		unwidth.append(rewidth[len(rewidth)-1])
+		rewidth.pop()
+
+		uncolor.append(recolor[len(recolor)-1])
+		recolor.pop()
+
+		unposx.append(reposx[len(reposx)-1])
+		reposx.pop()
+
+		unposy.append(reposy[len(reposy)-1])
+		reposy.pop()
+
+		unposx1.append(reposx1[len(reposx1)-1])
+		reposx1.pop()
+
+		unposy1.append(reposy1[len(reposy1)-1])
+		reposy1.pop()
+
+
+		if len(retypea) == 1:
+			do = 1
+			test1 += 1
+
+		if len(retypea) != 0 and retypea[len(retypea)-do] == 'link_gomme':
 			root.after(1,redo)
 
 	elif retypea[len(retypea)-1] == 'line':
@@ -520,11 +583,32 @@ def redo():
 		unposy1.append(reposy1[len(reposy1)-1])
 		reposy1.pop()
 
+	'''elif retypea[len(retypea)-1] == 'picture':
 
-def Clic(event):
-	global X,Y,n,m,X2,Y2
+		rename[len(rename)-1] = Canevas.create_image(reposx[len(reposx)-1],reposy[len(reposy)-1],anchor=CENTER,image=unpic[len(unpic)-1])
+
+		unname.append(rename[len(rename)-1])
+		rename.pop()
+
+		untypea.append(retypea[len(retypea)-1])
+		retypea.pop()
+
+		unposx.append(reposx[len(reposx)-1])
+		reposx.pop()
+
+		unposy.append(reposy[len(reposy)-1])
+		reposy.pop()
+
+		unpic.append(unpic[len(unpic)-1])
+		repic.pop()'''
+
+
+def L_Clic(event):
+	global X,Y,n,m,X1,Y1,X2,Y2,picture
 	X = event.x
 	Y = event.y
+	X1 = X
+	Y1 = Y
 	X2 = X
 	Y2 = Y
 	n += 1
@@ -538,6 +622,17 @@ def Clic(event):
 		unposy.append('none')
 		unposx1.append('none')
 		unposy1.append('none')
+		unpic.append('none')
+
+	if test == 'texte':
+		string = ''
+		size = tkFont.Font(size=wid)
+		m = Canevas.create_text(X,Y,anchor=NW,text=string,width=wid,font=size)
+
+	elif test == 'picture':
+		m = Canevas.create_image(X1,Y1,anchor=CENTER,image=picture)
+
+
 
 def Drag(event):
 	global X,Y,test,line,n,m,coul,X1,Y1,resx,resx,resy,resx1,resy1,X2,Y2
@@ -545,10 +640,10 @@ def Drag(event):
 	Y1 = event.y
 
 	if test == 'pencil':
-		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid,outline=coul,fill=coul)
+		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid-1,outline=coul,fill=coul)
 
 	elif test == 'rubber':
-		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid,outline='white',fill='white')
+		m = Canevas.create_oval(X1,Y1,X1,Y1,width=wid-1,outline='white',fill='white')
 
 	elif test == 'line':
 		Canevas.delete(m)
@@ -562,7 +657,6 @@ def Drag(event):
 		Canevas.delete(m)
 		resx = X-X1
 		resy = Y-Y1
-		Canevas.delete(m)
 		m = Canevas.create_oval(X+resx,Y+resy,X-resx,Y-resy,outline=coul,fill=coul)
 
 	elif test == 'rectangle':
@@ -573,7 +667,6 @@ def Drag(event):
 		Canevas.delete(m)
 		resx = X-X1
 		resy = Y-Y1
-		Canevas.delete(m)
 		m = Canevas.create_oval(X+resx,Y+resy,X-resx,Y-resy,width=wid,outline=coul)
 
 	elif test == 'circle':
@@ -663,14 +756,26 @@ def Drag(event):
 				m = Canevas.create_oval(X-resx,Y+resx,X+resx,Y-resx,outline=coul,fill=coul)
 
 	elif test == 'arrow':
-		W = X1
+		W1 = X1
 		H = Y1
-		if W <= 50:
-			W = 50
-		if H <= 50:
-			H = 50
-		Canevas.update()
-		Canevas.config(width = W, height =H)
+		if W1 <= 80:
+			W1 = 80
+		if H <= 80:
+			H = 80
+		Canevas.config(width = W1, height =H)
+		if W1>580:
+			Canevas.grid(row=0,column=0, columnspan=2,sticky=NW)
+
+		else:
+			Canevas.grid(row=0,column=0,sticky=NW)
+
+	elif test == 'text':
+		Canevas.delete(m)
+		m = Canevas.create_rectangle(X,Y,X1,Y1,width=1,outline='black')
+
+	elif test == 'picture':
+		Canevas.delete(m)
+		m = Canevas.create_image(X1,Y1,anchor=CENTER,image=picture)
 
 	if len(unname)>1000000:
 		unname.pop(0)
@@ -701,6 +806,21 @@ def Drag(event):
 			untypea.append('link_pencil')
 			unwidth.append(wid)
 			uncolor.append(coul)
+			unposx.append(X1)
+			unposy.append(Y1)
+			unposx1.append(X2)
+			unposy1.append(Y2)
+			X2=X1
+			Y2=Y1
+
+		elif test == 'rubber':
+			n += 1
+			m = str(n)
+			m = Canevas.create_line(X1,Y1,X2,Y2,width=wid,fill='white')
+			unname.append(str(m))
+			untypea.append('link_rubber')
+			unwidth.append(wid)
+			uncolor.append('white')
 			unposx.append(X1)
 			unposy.append(Y1)
 			unposx1.append(X2)
@@ -783,6 +903,13 @@ def Release(event):
 					unposy.append(Y+resy)
 					unposx1.append(X+resy)
 					unposy1.append(Y-resy)
+
+		'''elif test == 'picture':
+			unname.append(str(m))
+			untypea.append(test)
+			unposx.append(X1)
+			unposy.append(Y1)
+			unpic.append(picture)'''
 
 
 
@@ -891,7 +1018,7 @@ def color():
 	Canevas1.config(cursor='tcross')
 	Canevas1.bind('<Button-1>',color_chooser)
 	Canevas1.bind('<B1-Motion>',color_viewer)
-	Canevas1.pack()
+	Canevas1.grid(row=2,column=1)
 	view = Canevas1.create_oval(-5,-5,0,0,fill=coul)
 	k=0
 	n= 100
@@ -907,17 +1034,41 @@ def color():
 
 def save():
 	Canevas.update()
-	name = str(raw_input('Picture name: '))
-	fil=Canevas.postscript(file="%s.ps"%name, colormode='color')
-	print '%s has been saved'%name
+	Canevas.postscript(file=tkFileDialog.asksaveasfilename(), colormode='color')
 
+def writing(event):
+	global X,Y,wid,string,m,n,X1,letter
+	string = ''
+	key = event.char
+	key1 = event.keysym
+	if test == 'text' and key1 != 'BackSpace' and key1 != 'Return':
+		letter.append(key)
+		for i in letter:
+			string += i
+			print 'hello'
+		Canevas.delete(m)
+		SIZE = tkFont.Font(size=wid)
+		m = Canevas.create_text(X,Y,anchor=NW,text=string,width=X1-X,font=SIZE,fill=coul)
 
+	elif key1 == 'Return':
+		n += 1
+		m = str(n)
+		Y+=wid+(wid/2)
 
-W = 500
+	elif key1 == 'BackSpace' and len(letter)>0:
+		letter.pop()
+		for i in letter:
+			string += i
+			print 'hello'
+		Canevas.delete(m)
+		SIZE = tkFont.Font(size=wid)
+		m = Canevas.create_text(X,Y,anchor=NW,text=string,width=X1-X,font=SIZE,fill=coul)
+
+W1 = 580
 H = 500
 
 root = Tk()
-root.title('Pion')
+root.title('Paint')
 
 test = 'arrow'
 n = 0
@@ -928,13 +1079,13 @@ coul = 'black'
 
 wid = 1
 
-Canevas = Canvas(root, width = W, height =H,bg = 'white')
+Canevas = Canvas(root, width = W1, height =H,bg = 'white')
 Canevas.focus_set()
 
 
 
 Label1 = Label(root, text = 'Thickness : %s'%wid)
-Label1.pack(side = BOTTOM)
+Label1.grid(row=2,column=0)
 
 ### MENU ########
 
@@ -953,6 +1104,7 @@ menubar.add_cascade(label="File", menu=menufile)
 menutools.add_command(label="Pencil",command = pencil)
 menutools.add_command(label="Rubber", command = rubber)
 menutools.add_command(label="Line", command = line)
+menutools.add_command(label="Text", command = text)
 menutools.add_command(label="Arrow", command = arrow)
 menubar.add_cascade(label="Tools",menu=menutools)
 
@@ -973,14 +1125,16 @@ root.config(menu=menubar)
 
 ### MENU ########
 
-Canevas.bind('<Button-1>',Clic)
+Canevas.bind('<Button-1>',L_Clic)
+#Canevas.bind('<Button-3>',R_Clic)
 Canevas.bind('<B1-Motion>',Drag)
 Canevas.bind('<ButtonRelease-1>',Release)
 Canevas.bind("<Button-4>", plus)
 Canevas.bind("<Button-5>", minus)
 Canevas.bind('<Control-z>',undo1)
 Canevas.bind("<Control-y>", redo1)
-Canevas.pack()
+Canevas.bind('<Key>',writing)
+Canevas.grid(row=0,column=0, columnspan=2,sticky=NW)
 
 
 gifdict={}

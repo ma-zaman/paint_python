@@ -40,9 +40,8 @@ def minus(event):
 		print 'min'
 		wid = 1
 
-	Label1.destroy()
-	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.grid(row=2,column=0)
+	wide.set(wid)
+
 
 def plus(event):
 	global wid,Label1,butplus,butminus
@@ -52,9 +51,12 @@ def plus(event):
 	else:
 		print 'max'
 
-	Label1.destroy()
-	Label1 = Label(root, text = 'Thickness : %s'%wid)
-	Label1.grid(row=2,column=0)
+	wide.set(wid)
+
+
+def thick(width_value):
+        global wid
+        wid = int(width_value)
 
 ### THICKNESS ###
 
@@ -914,51 +916,60 @@ def Release(event):
 
 
 def new_page():
-	Canevas.delete(ALL)
 
-	while len(unname)!=0:
-		unname.pop(0)
+	question = tkMessageBox.askyesno('','Are you sure ?')
 
-	while len(rename)!=0:
-		rename.pop(0)
+	questionsave = tkMessageBox.askyesno('','Do you want to save ?')
 
-	while len(unposx)!=0:
-		unposx.pop(0)
-		unposx1.pop(0)
-		unposy.pop(0)
-		unposy1.pop(0)
-		untypea.pop(0)
-		unwidth.pop(0)
-		uncolor.pop(0)
+	if questionsave == True:
+		save()
 
-	while len(reposx)!=0:
-		reposx.pop(0)
-		reposx1.pop(0)
-		reposy.pop(0)
-		reposy1.pop(0)
-		retypea.pop(0)
-		rewidth.pop(0)
-		recolor.pop(0)
+	if question == True:
+		Canevas.delete(ALL)
 
-	unname.append('none')
-	unposx.append('none')
-	unposx1.append('none')
-	unposy.append('none')
-	unposy1.append('none')
-	untypea.append('none')
-	unwidth.append('none')
-	uncolor.append('none')
+		while len(unname)!=0:
+			unname.pop(0)
 
-	rename.append('none')
-	reposx.append('none')
-	reposx1.append('none')
-	reposy.append('none')
-	reposy1.append('none')
-	retypea.append('none')
-	rewidth.append('none')
-	recolor.append('none')
+		while len(rename)!=0:
+			rename.pop(0)
 
-	n=0
+		while len(unposx)!=0:
+			unposx.pop(0)
+			unposx1.pop(0)
+			unposy.pop(0)
+			unposy1.pop(0)
+			untypea.pop(0)
+			unwidth.pop(0)
+			uncolor.pop(0)
+
+		while len(reposx)!=0:
+			reposx.pop(0)
+			reposx1.pop(0)
+			reposy.pop(0)
+			reposy1.pop(0)
+			retypea.pop(0)
+			rewidth.pop(0)
+			recolor.pop(0)
+
+		unname.append('none')
+		unposx.append('none')
+		unposx1.append('none')
+		unposy.append('none')
+		unposy1.append('none')
+		untypea.append('none')
+		unwidth.append('none')
+		uncolor.append('none')
+
+		rename.append('none')
+		reposx.append('none')
+		reposx1.append('none')
+		reposy.append('none')
+		reposy1.append('none')
+		retypea.append('none')
+		rewidth.append('none')
+		recolor.append('none')
+
+		n=0
 
 def color_palette(N,num):
 	delta = 255. / (N/3)
@@ -978,7 +989,8 @@ def color_palette(N,num):
 	return '#' + hex(int(R))[2:].zfill(2) + hex(int(G))[2:].zfill(2)+ hex(int(B))[2:].zfill(2)
 
 def color_chooser(event):
-	global coul,coulx,couly,view,n
+	global coul,coulx,couly,view,n,view1
+	Canevas1.delete(view1)
 	Canevas1.delete(view)
 	n= 100
 	coulx = event.x
@@ -987,39 +999,45 @@ def color_chooser(event):
 	if coulx1 > 99:
 		coulx1 = 99
 	elif coulx1 < 0:
-		coulx1 = 0
+		coulx1 = 1
+
 	coul = color_palette(n,1.0/float(n)*float(coulx1))
-	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
+	view = Canevas1.create_polygon(coulx-10,20,coulx+10,20,coulx,0,outline='black',fill='black')
+	view1 = Canevas1.create_line(coulx,0,coulx,20,width=1,fill=coul)
 
 def color_viewer(event):
-	global view,coul
+	global view,coul,view1
 	coulx = event.x
 	couly = event.y
 	coulx1 = (coulx/5)+1
 	if coulx1 > 99:
 		coulx1 = 99
 		coulx = 500
-	elif coulx1 < 0:
-		coulx1 = 0
+	elif coulx1 < 1:
+		coulx1 = 1
 		coulx = 0
 	if couly > 50:
 		couly = 50
 
 	elif couly < 0:
 		couly = 0
+
 	coul = color_palette(n,1.0/float(n)*float(coulx1))
 	Canevas1.delete(view)
-	view = Canevas1.create_oval(coulx-10,couly-10,coulx+10,couly+10,fill=coul)
+	Canevas1.delete(view1)
+	view = Canevas1.create_polygon(coulx-10,20,coulx+10,20,coulx,0,outline='black',fill='black')
+	view1 = Canevas1.create_line(coulx,0,coulx,20,width=1,fill=coul)
 
 
 def color():
-	global Canevas1,view
-	Canevas1 = Canvas(root, width = 500, height =50,bg = 'white')
+	global Canevas1,view,view1
+	Canevas1 = Canvas(root, width = 500, height =20,bg = 'white')
 	Canevas1.config(cursor='tcross')
 	Canevas1.bind('<Button-1>',color_chooser)
 	Canevas1.bind('<B1-Motion>',color_viewer)
 	Canevas1.grid(row=2,column=1)
-	view = Canevas1.create_oval(-5,-5,0,0,fill=coul)
+	view = Canevas1.create_polygon(-20,-20,0,-20,-10,-10,fill='black')
+	view1 = Canevas1.create_line(-10,-10,-20,-20,fill=coul)
 	k=0
 	n= 100
 	azex=0
@@ -1084,8 +1102,10 @@ Canevas.focus_set()
 
 
 
-Label1 = Label(root, text = 'Thickness : %s'%wid)
-Label1.grid(row=2,column=0)
+wide = StringVar()
+wide.set(50)
+scale = Scale(root,from_=100,to=1,resolution=1,orient=VERTICAL,length=500,width=20,variable=wide,command=thick)
+scale.grid(row=0,column=2)
 
 ### MENU ########
 
